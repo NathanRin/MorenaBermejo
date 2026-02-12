@@ -792,7 +792,7 @@ footer {
 @media (max-width: 768px) {
     /* Asegurar que la imagen de fondo se cargue correctamente en móvil */
     .model-photo::before {
-        background-image: url('Polas/IMG_2918.jpeg');
+        background-image: url('otras/P1.jpeg');
         background-size: cover;
         background-position: center top; /* Ajuste para mejor composición */
         background-repeat: no-repeat;
