@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morena Bermejo | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon básico -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%238b7355%22>M</text></svg>">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">Morena<span>.</span></a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="book.html">Book</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="home">
+        <section class="photo-section">
+            <div class="model-photo">
+                <img src="Polas/IMG_2918.jpeg" alt="Morena Bermejo" class="model-image">
+            </div>
+        </section>
+        
+        <section class="stats-section">
+            <h1 class="model-name">Morena Bermejo</h1>
+            <div class="stats-container">
+                <h2 class="stats-title">Model Details</h2>
+                <div class="stats-grid">
+                    <div class="stat-item"><span class="stat-label">Height</span><span class="stat-value">1.71 m</span></div>
+                    <div class="stat-item"><span class="stat-label">Bust</span><span class="stat-value">82 cm</span></div>
+                    <div class="stat-item"><span class="stat-label">Waist</span><span class="stat-value">68 cm</span></div>
+                    <div class="stat-item"><span class="stat-label">Hips</span><span class="stat-value">94 cm</span></div>
+                    <div class="stat-item"><span class="stat-label">Shoes</span><span class="stat-value">EU 38 / US 7.5</span></div>
+                    <div class="stat-item"><span class="stat-label">Eyes</span><span class="stat-value">Brown</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="book-btn-section">
+        <a href="book.html" class="book-btn animation-3">
+            <span>View Book</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Morena<span>.</span></div>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/morenabermejo?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <!-- Email - Ahora con funcionalidad de mensaje emergente -->
+                    <a href="#" class="email-btn" aria-label="Email" id="emailButton">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <p class="copyright">© 2026 Morena Bermejo</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Overlay para fondo oscuro -->
+    <div class="email-tooltip-overlay" id="emailOverlay"></div>
+    
+    <!-- Mensaje emergente del email -->
+    <div class="email-tooltip" id="emailTooltip">
+        <div class="email-tooltip-content">
+            <div class="email-tooltip-icon">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <p class="email-tooltip-text">Para contrataciones, enviar propuestas a:</p>
+            <div class="email-tooltip-address" id="emailAddress">
+                morena.bermejo0@gmail.com
+            </div>
+            <div class="email-tooltip-buttons">
+                <button class="email-tooltip-btn email-tooltip-copy" id="copyEmailBtn">
+                    <i class="fas fa-copy"></i> Copiar email
+                </button>
+                <button class="email-tooltip-btn email-tooltip-close" id="closeEmailBtn">
+                    <i class="fas fa-times"></i> Cerrar
+                </button>
+            </div>
+        </div>
+        <div class="email-tooltip-copied" id="copiedMessage">
+            <i class="fas fa-check"></i> ¡Email copiado!
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

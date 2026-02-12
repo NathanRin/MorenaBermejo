@@ -1,0 +1,853 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #0a0a0a;
+    --secondary-color: #2a2a2a;
+    --accent-color: #8b7355;
+    --light-color: #f9f9f9;
+    --text-color: #1a1a1a;
+    --text-light: #777;
+    --cream: #f8f5f0;
+    --transition: all 0.3s ease;
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--cream);
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--cream);
+    padding: 25px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: var(--accent-color);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 40px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: var(--transition);
+    position: relative;
+    padding: 5px 0;
+}
+
+/* LÍNEA BAJO LOS ENLACES DE NAVEGACIÓN (restaurada) */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+/* Main Layout */
+.main-content {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 120px;
+    align-items: center;
+}
+
+/* Photo Section */
+.photo-section {
+    flex: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.model-photo {
+    width: 100%;
+    max-width: 700px;
+    height: 75vh;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.model-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.9;
+    display: block;
+}
+
+/* Fondo de respaldo por si la imagen no carga */
+.model-photo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    z-index: -1;
+}
+
+/* Stats Section */
+.stats-section {
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 40px;
+    height: 75vh;
+}
+
+.model-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+    letter-spacing: -1px;
+}
+
+.stats-container {
+    background-color: white;
+    padding: 40px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
+    max-width: 400px;
+}
+
+.stats-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+}
+
+.stat-value {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+/* Book Button Section - ESTILOS BASE */
+.book-btn-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+    min-height: 200px;
+}
+
+.book-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 18px 45px;
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    border-radius: 0;
+    transition: var(--transition);
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.book-btn i {
+    transition: transform 0.3s ease;
+}
+
+.book-btn:hover i {
+    transform: translateX(5px);
+}
+
+.book-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ANIMACIÓN 1: GLOW PULSANTE */
+.animation-1 {
+    animation: slideUp 0.8s ease-out 0.5s forwards;
+    background: linear-gradient(90deg, #0a0a0a, #2a2a2a, #0a0a0a);
+    background-size: 200% 100%;
+}
+
+.animation-1:hover {
+    background-position: 100% 0;
+    animation: pulseGlow 1.5s infinite;
+    box-shadow: 0 0 20px rgba(139, 115, 85, 0.5);
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(139, 115, 85, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(139, 115, 85, 0.8);
+    }
+}
+
+/* ANIMACIÓN 2: EXPANSIÓN SUAVE */
+.animation-2 {
+    animation: slideUp 0.8s ease-out 0.5s forwards;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.animation-2::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+    z-index: -1;
+}
+
+.animation-2:hover {
+    color: white;
+}
+
+.animation-2:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ANIMACIÓN 3: DESLIZAMIENTO */
+.animation-3 {
+    animation: slideUp 0.8s ease-out 0.5s forwards;
+    background-color: transparent;
+    color: var(--primary-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.animation-3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: left 0.5s;
+    z-index: -1;
+}
+
+.animation-3:hover {
+    color: white;
+}
+
+.animation-3:hover::before {
+    left: 0;
+}
+
+.animation-3 i {
+    transition: transform 0.3s 0.1s;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.footer-logo span {
+    color: var(--accent-color);
+}
+
+.social-links {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+/* Mejoras para los iconos sociales */
+.social-links a {
+    color: white;
+    font-size: 1.2rem;
+    margin: 0 15px;
+    transition: var(--transition);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+/* Para el icono de email específicamente */
+.social-links a .fa-envelope {
+    font-size: 1.1rem;
+}
+
+.copyright {
+    font-size: 0.85rem;
+    color: #aaa;
+    letter-spacing: 1px;
+}
+
+/* Estilos para el mensaje flotante del email */
+        .email-tooltip {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background-color: white;
+            color: var(--primary-color);
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 400px;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .email-tooltip.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .email-tooltip-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .email-tooltip-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .email-tooltip-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .email-tooltip-address {
+            background-color: rgba(139, 115, 85, 0.1);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid rgba(139, 115, 85, 0.2);
+        }
+        
+        .email-tooltip-buttons {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .email-tooltip-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .email-tooltip-copy {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .email-tooltip-copy:hover {
+            background-color: #a68a6a;
+            transform: translateY(-2px);
+        }
+        
+        .email-tooltip-close {
+            background-color: #f5f5f5;
+            color: var(--text-light);
+        }
+        
+        .email-tooltip-close:hover {
+            background-color: #e8e8e8;
+        }
+        
+        /* Overlay para fondo oscuro */
+        .email-tooltip-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        
+        .email-tooltip-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Estilo para cuando se copia el email */
+        .email-tooltip-copied {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        .email-tooltip-copied.active {
+            opacity: 1;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            opacity: 0;
+            z-index: 3001;
+            pointer-events: none;
+        }
+        
+        /* Estilo para el footer actualizado */
+        .social-links {
+            position: relative;
+        }
+
+/* ============================================
+   RESPONSIVE - MEDIA QUERIES
+   ============================================ */
+
+@media (max-width: 1200px) {
+    .main-content {
+        flex-direction: column;
+        padding-top: 140px;
+    }
+    
+    .model-photo {
+        height: 60vh;
+        max-width: 90%;
+    }
+    
+    .stats-section {
+        height: auto;
+        padding: 40px 20px;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .stats-container {
+        max-width: 90%;
+    }
+    
+    .model-name {
+        text-align: center;
+        font-size: 3.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Navegación móvil */
+    .nav-links {
+        position: fixed;
+        top: 90px;
+        left: 0;
+        width: 100%;
+        background-color: var(--cream);
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        transform: translateY(-150%);
+        opacity: 0;
+        transition: transform 0.4s ease, opacity 0.4s ease, visibility 0.4s ease;
+        z-index: 999;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        visibility: hidden;
+    }
+    
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .nav-links li {
+        margin: 15px 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .nav-links a {
+        display: block;
+        padding: 12px 0;
+        width: 100%;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    .nav-links a::after {
+        display: none;
+    }
+    
+    .nav-links a:hover {
+        transform: translateX(5px);
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+        z-index: 1000;
+        position: relative;
+    }
+    
+    /* Contenido principal */
+    .model-name {
+        font-size: 2.8rem;
+    }
+    
+    .model-photo {
+        height: 55vh; /* Aumentado de 50vh para mejor visibilidad */
+        background-attachment: scroll !important; /* Fija el fondo en móvil */
+    }
+    
+    .photo-section {
+        padding: 20px;
+    }
+    
+    .stats-container {
+        padding: 30px;
+    }
+    
+    /* Botón Book */
+    .book-btn {
+        padding: 15px 35px;
+        font-size: 0.85rem;
+    }
+    
+    /* Tooltip de email */
+    .email-tooltip {
+        width: 90%;
+        max-width: 350px;
+        padding: 15px 20px;
+        bottom: 80px;
+    }
+    
+    .email-tooltip-text {
+        font-size: 0.9rem;
+    }
+    
+    .email-tooltip-address {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+    
+    .email-tooltip-buttons {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .model-name {
+        font-size: 2.3rem;
+        margin-bottom: 30px;
+    }
+    
+    .stats-container {
+        width: 100%;
+        padding: 25px 20px;
+        margin-top: 20px;
+    }
+    
+    .stats-title {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+    }
+    
+    .main-content {
+        padding-top: 120px;
+    }
+    
+    .model-photo {
+        height: 50vh;
+        max-width: 95%;
+    }
+    
+    .photo-section {
+        padding: 15px;
+    }
+    
+    .book-btn {
+        padding: 14px 30px;
+        font-size: 0.8rem;
+        flex-direction: row; /* Mantener en fila */
+        gap: 12px;
+    }
+    
+    .book-btn i {
+        display: inline-block; /* Mostrar la flecha */
+    }
+    
+    /* Ajustes adicionales para móviles muy pequeños */
+    .stats-grid {
+        gap: 15px;
+    }
+    
+    .stat-item {
+        padding-bottom: 12px;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    .stat-value {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   AJUSTES ESPECÍFICOS PARA LA IMAGEN EN MÓVIL
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Asegurar que la imagen de fondo se cargue correctamente en móvil */
+    .model-photo::before {
+        background-image: url('Polas/IMG_2918.jpeg');
+        background-size: cover;
+        background-position: center top; /* Ajuste para mejor composición */
+        background-repeat: no-repeat;
+        background-attachment: scroll; /* Importante para móvil */
+    }
+    
+    /* Si usas etiqueta <img> en lugar de background */
+    .model-image {
+        object-position: center top;
+    }
+}
+
+/* ============================================
+   AJUSTES PARA TABLETS PEQUEÑAS
+   ============================================ */
+
+@media (max-width: 600px) and (min-width: 481px) {
+    .model-name {
+        font-size: 2.6rem;
+    }
+    
+    .model-photo {
+        height: 55vh;
+    }
+    
+    .stats-container {
+        padding: 35px 30px;
+    }
+}
+
+/* ============================================
+   ORIENTACIÓN HORIZONTAL EN MÓVIL
+   ============================================ */
+
+@media (max-height: 500px) and (max-width: 768px) {
+    .model-photo {
+        height: 70vh; /* Más alto en orientación horizontal */
+    }
+    
+    .stats-section {
+        height: auto;
+        padding-top: 20px;
+    }
+    
+    .main-content {
+        padding-top: 100px; /* Menos padding en móvil horizontal */
+    }
+}
+
+/* ============================================
+   AJUSTES PARA PANTALLAS MUY ALTAS
+   ============================================ */
+
+@media (min-height: 900px) and (max-width: 768px) {
+    .model-photo {
+        height: 45vh; /* Un poco más bajo en pantallas altas */
+    }
+}

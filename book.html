@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morena Bermejo | Portfolio Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%238b7355%22>M</text></svg>">
+    <style>
+        /* Estilos específicos para la página del book */
+        .book-container {
+            padding-top: 120px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Diseño de categorías/tabs - BOTONES MÁS GRANDES */
+        .categories-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 16px 32px; /* MÁS GRANDE */
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 1rem; /* MÁS GRANDE */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+        }
+
+        .category-tab:hover {
+            background-color: rgba(139, 115, 85, 0.1);
+        }
+
+        .category-tab.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Diseño tipo rompecabezas/mosaico */
+        .puzzle-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: 250px;
+            grid-gap: 15px;
+            grid-auto-flow: dense;
+        }
+
+        .puzzle-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .puzzle-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .puzzle-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .puzzle-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Para dar el efecto de rompecabezas, diferentes tamaños */
+        .puzzle-item:nth-child(3n) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .puzzle-item:nth-child(5n) {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .puzzle-item:nth-child(7n) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-content img {
+            width: 100%;
+            height: auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 2001;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .lightbox-nav button:hover {
+            opacity: 1;
+        }
+
+        /* Estilo para categorías individuales */
+        .category-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .category-section.active {
+            display: block;
+        }
+
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .puzzle-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-auto-rows: 200px;
+            }
+            
+            .puzzle-item:nth-child(3n),
+            .puzzle-item:nth-child(5n),
+            .puzzle-item:nth-child(7n) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            
+            .categories-tabs {
+                gap: 10px;
+            }
+            
+            .category-tab {
+                padding: 14px 24px; /* Ajustado para móvil */
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .puzzle-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-auto-rows: 150px;
+                grid-gap: 10px;
+            }
+            
+            .categories-tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Morena<span>.</span></a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#" class="active">Book</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Galería con categorías -->
+    <div class="book-container">
+        <!-- Tabs de categorías -->
+        <div class="categories-tabs" id="categoriesTabs">
+            <!-- Las pestañas se generarán con JavaScript -->
+        </div>
+        
+        <!-- Contenedor para las galerías de cada categoría -->
+        <div id="galleriesContainer">
+            <!-- Las galerías se cargarán dinámicamente con JavaScript -->
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="closeLightbox">&times;</button>
+        <div class="lightbox-content">
+            <img id="lightboxImage" src="" alt="">
+        </div>
+        <div class="lightbox-nav">
+            <button id="prevImage"><i class="fas fa-chevron-left"></i></button>
+            <button id="nextImage"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+// ============================================
+// DATOS DE LAS IMÁGENES POR CATEGORÍA
+// ============================================
+
+// Define aquí qué imágenes van en cada categoría
+// Puedes modificar estos arrays según cómo quieras organizar las fotos
+const categories = {
+    'Lifestyle': [
+        'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10', 
+        'L11', 'L12', 'L13', 'L14', 'L15', 'L16', 'L17', 'L18', 'L19'
+    ],
+    'Polaroid': [
+        'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7'
+    ],
+    'Fashion Editorial': [
+        'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 
+        'F11', 'F12', 'F13', 'F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 
+        'F21', 'F22', 'F23', 'F24', 'F25', 'F26', 'F27'
+    ],
+    'Ecommerce': [
+        'E5', 'E6', 'E7', 'E8', 'E9', 'E10', 'E11', 'E12', 
+        'E13', 'E14', 'E15', 'E16', 'E17', 'E18', 'E19'
+    ]
+};
+
+// Array con TODAS las imágenes para el lightbox
+let allImages = [];
+for (const category in categories) {
+    allImages = allImages.concat(categories[category]);
+}
+
+// ============================================
+// MENÚ DE NAVEGACIÓN
+// ============================================
+
+// Mobile menu toggle
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const navLinks = document.querySelector('.nav-links');
+
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
+    });
+}
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+    });
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        
+        if (href === '#') {
+            e.preventDefault();
+            return;
+        }
+        
+        if (href.includes('.html')) {
+            return;
+        }
+        
+        e.preventDefault();
+        const targetElement = document.querySelector(href);
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 90,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// ============================================
+// SISTEMA DE CATEGORÍAS/TABS
+// ============================================
+
+let currentCategory = Object.keys(categories)[0]; // Primera categoría por defecto
+
+// Crear las pestañas de categorías
+function createCategoryTabs() {
+    const tabsContainer = document.getElementById('categoriesTabs');
+    tabsContainer.innerHTML = '';
+    
+    Object.keys(categories).forEach((categoryName, index) => {
+        const tab = document.createElement('button');
+        tab.className = 'category-tab';
+        if (index === 0) tab.classList.add('active');
+        tab.textContent = categoryName;
+        tab.dataset.category = categoryName;
+        
+        tab.addEventListener('click', () => {
+            // Remover clase active de todas las pestañas
+            document.querySelectorAll('.category-tab').forEach(t => {
+                t.classList.remove('active');
+            });
+            
+            // Agregar clase active a la pestaña clickeada
+            tab.classList.add('active');
+            
+            // Cambiar la categoría activa
+            switchCategory(categoryName);
+        });
+        
+        tabsContainer.appendChild(tab);
+    });
+}
+
+// Cambiar de categoría
+function switchCategory(categoryName) {
+    currentCategory = categoryName;
+    
+    // Ocultar todas las galerías
+    document.querySelectorAll('.category-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Mostrar la galería seleccionada
+    const targetGallery = document.getElementById(`gallery-${categoryName}`);
+    if (targetGallery) {
+        targetGallery.classList.add('active');
+    }
+}
+
+// ============================================
+// CREAR GALERÍAS POR CATEGORÍA
+// ============================================
+
+function createGalleries() {
+    const container = document.getElementById('galleriesContainer');
+    container.innerHTML = '';
+    
+    Object.keys(categories).forEach((categoryName, index) => {
+        // Crear sección para la categoría
+        const section = document.createElement('div');
+        section.className = 'category-section';
+        section.id = `gallery-${categoryName}`;
+        if (index === 0) section.classList.add('active');
+        
+        // Título de la categoría
+        const title = document.createElement('h2');
+        title.className = 'category-title';
+        title.textContent = categoryName;
+        section.appendChild(title);
+        
+        // Contenedor de la galería
+        const gallery = document.createElement('div');
+        gallery.className = 'puzzle-gallery';
+        gallery.id = `puzzle-gallery-${categoryName}`;
+        section.appendChild(gallery);
+        
+        container.appendChild(section);
+    });
+}
+
+// ============================================
+// CARGAR IMÁGENES EN LAS GALERÍAS
+// ============================================
+
+function loadGalleryForCategory(categoryName, imageNumbers) {
+    const gallery = document.getElementById(`puzzle-gallery-${categoryName}`);
+    
+    if (!gallery) return;
+    
+    // Limpiar la galería
+    gallery.innerHTML = '';
+    
+    // Crear elementos para cada imagen
+    imageNumbers.forEach((filename, index) => {
+        // Calcular índice global para el lightbox
+        const globalIndex = allImages.indexOf(filename);
+        
+        const item = document.createElement('div');
+        item.className = 'puzzle-item';
+        item.dataset.globalIndex = globalIndex;
+        item.dataset.category = categoryName;
+        item.dataset.localIndex = index;
+        
+        const img = document.createElement('img');
+        
+        // Intentar cargar con diferentes extensiones
+        img.src = `otras/${filename}.jpg`;
+        img.alt = `Morena Bermejo - ${categoryName} - Foto ${index + 1}`;
+        img.loading = 'lazy';
+        
+        // Manejar errores de carga
+        img.onerror = function() {
+            this.src = `otras/${filename}.jpeg`;
+            this.onerror = function() {
+                this.src = `otras/${filename}.png`;
+                this.onerror = function() {
+                    this.src = `otras/${filename}`;
+                    this.onerror = function() {
+                        this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmNWYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNnB4IiBmaWxsPSIjODg4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+SW1hZ2VuIG5vIGRpc3BvbmlibGU8L3RleHQ+PC9zdmc+';
+                    };
+                };
+            };
+        };
+        
+        // Crear overlay con número
+        const overlay = document.createElement('div');
+        overlay.className = 'number-overlay';
+        overlay.textContent = index + 1;
+        
+        item.appendChild(img);
+        item.appendChild(overlay);
+        gallery.appendChild(item);
+        
+        // Agregar evento click para abrir el lightbox
+        item.addEventListener('click', () => openLightbox(globalIndex));
+        
+        // Efecto hover para el overlay
+        item.addEventListener('mouseenter', () => {
+            overlay.style.opacity = '1';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            overlay.style.opacity = '0';
+        });
+    });
+    
+    // Agregar efecto de aparición suave
+    const galleryItems = gallery.querySelectorAll('.puzzle-item');
+    galleryItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px) scale(0.95)';
+        
+        setTimeout(() => {
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0) scale(1)';
+        }, 50 + (index * 20));
+    });
+}
+
+// Cargar todas las galerías
+function loadAllGalleries() {
+    for (const categoryName in categories) {
+        loadGalleryForCategory(categoryName, categories[categoryName]);
+    }
+}
+
+// ============================================
+// LIGHTBOX (VISUALIZADOR DE IMÁGENES GRANDES)
+// ============================================
+
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const closeLightbox = document.getElementById('closeLightbox');
+const prevButton = document.getElementById('prevImage');
+const nextButton = document.getElementById('nextImage');
+let currentImageIndex = 0;
+
+// Abrir lightbox con una imagen específica
+function openLightbox(index) {
+    currentImageIndex = index;
+    updateLightboxImage();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Actualizar contador del lightbox
+    updateLightboxCounter();
+}
+
+// Actualizar la imagen en el lightbox
+function updateLightboxImage() {
+    const filename = allImages[currentImageIndex];
+    
+    if (!filename) return;
+    
+    // Intentar diferentes extensiones
+    lightboxImage.src = `otras/${filename}.jpg`;
+    lightboxImage.alt = `Morena Bermejo - Foto ${currentImageIndex + 1}`;
+    
+    // Manejar errores de carga
+    lightboxImage.onerror = function() {
+        this.src = `otras/${filename}.jpeg`;
+        this.onerror = function() {
+            this.src = `otras/${filename}.png`;
+            this.onerror = function() {
+                this.src = `otras/${filename}`;
+                this.onerror = function() {
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmNWYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNnB4IiBmaWxsPSIjODg4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+SW1hZ2VuIG5vIGRpc3BvbmlibGU8L3RleHQ+PC9zdmc+';
+                };
+            };
+        };
+    };
+}
+
+// Actualizar contador en el lightbox
+function updateLightboxCounter() {
+    let counter = document.getElementById('lightboxCounter');
+    
+    if (!counter) {
+        counter = document.createElement('div');
+        counter.id = 'lightboxCounter';
+        counter.style.position = 'absolute';
+        counter.style.top = '20px';
+        counter.style.left = '50%';
+        counter.style.transform = 'translateX(-50%)';
+        counter.style.color = 'white';
+        counter.style.fontFamily = "'Inter', sans-serif";
+        counter.style.fontSize = '0.9rem';
+        counter.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        counter.style.padding = '5px 15px';
+        counter.style.borderRadius = '20px';
+        counter.style.zIndex = '2002';
+        lightbox.appendChild(counter);
+    }
+    
+    // Encontrar la categoría actual
+    let currentCategoryName = '';
+    for (const categoryName in categories) {
+        if (categories[categoryName].includes(allImages[currentImageIndex])) {
+            currentCategoryName = categoryName;
+            break;
+        }
+    }
+    
+    // Calcular índice local dentro de la categoría
+    const categoryImages = categories[currentCategoryName] || [];
+    const localIndex = categoryImages.indexOf(allImages[currentImageIndex]) + 1;
+    const totalInCategory = categoryImages.length;
+    
+    counter.textContent = `${currentCategoryName}: ${localIndex}/${totalInCategory} (Total: ${currentImageIndex + 1}/${allImages.length})`;
+}
+
+// Cerrar lightbox
+function closeLightboxFunc() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Mostrar siguiente imagen
+function showNextImage() {
+    currentImageIndex = (currentImageIndex + 1) % allImages.length;
+    updateLightboxImage();
+    updateLightboxCounter();
+}
+
+// Mostrar imagen anterior
+function showPrevImage() {
+    currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+    updateLightboxImage();
+    updateLightboxCounter();
+}
+
+// ============================================
+// EVENT LISTENERS
+// ============================================
+
+closeLightbox.addEventListener('click', closeLightboxFunc);
+nextButton.addEventListener('click', showNextImage);
+prevButton.addEventListener('click', showPrevImage);
+
+document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    
+    switch(e.key) {
+        case 'Escape': closeLightboxFunc(); break;
+        case 'ArrowRight': showNextImage(); break;
+        case 'ArrowLeft': showPrevImage(); break;
+    }
+});
+
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox')) {
+        closeLightboxFunc();
+    }
+});
+
+// ============================================
+// INICIALIZACIÓN
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Agregar CSS para el overlay de números
+    const style = document.createElement('style');
+    style.textContent = `
+        .number-overlay {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .puzzle-item:hover .number-overlay {
+            opacity: 1;
+        }
+        
+        .nav-links a.active {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Inicializar el sistema de categorías
+    createCategoryTabs();
+    createGalleries();
+    loadAllGalleries();
+    
+    // Navegación por gestos táctiles para el lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    lightbox.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    lightbox.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const difference = touchStartX - touchEndX;
+        
+        if (Math.abs(difference) > swipeThreshold) {
+            if (difference > 0) {
+                showNextImage();
+            } else {
+                showPrevImage();
+            }
+        }
+    }
+});
+    </script>
+</body>
+</html>
